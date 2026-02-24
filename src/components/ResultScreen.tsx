@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { CheckCircle, Sparkles } from "lucide-react";
 
-const AFFILIATE_LINK = "https://seulink.com/afiliado";
+const AFFILIATE_LINK = "https://kiwify.app/U7sUyIQ?afid=bCH5tjUf";
 
 const ResultScreen = () => {
   const [showButton, setShowButton] = useState(false);
