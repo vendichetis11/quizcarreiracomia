@@ -1,8 +1,15 @@
+import { useState, useEffect } from "react";
 import { CheckCircle, Sparkles } from "lucide-react";
 
 const AFFILIATE_LINK = "https://seulink.com/afiliado";
 
 const ResultScreen = () => {
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowButton(true), 5000);
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <div className="flex flex-col items-center px-5 py-8 min-h-[70vh] justify-center gap-6">
       <div className="w-16 h-16 rounded-full quiz-gradient flex items-center justify-center glow-primary">
@@ -35,20 +42,27 @@ const ResultScreen = () => {
         Assista ao vídeo abaixo para liberar seu acesso aos <span className="text-primary font-semibold">prompts ultra-realistas</span>.
       </p>
 
-      <a
-        href={AFFILIATE_LINK}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="w-full max-w-sm block"
-      >
-        <button className="w-full py-4 rounded-2xl quiz-gradient text-primary-foreground font-extrabold text-lg tracking-wide glow-primary pulse-glow transition-transform active:scale-95">
-          🔓 QUERO MEU ACESSO
-        </button>
-      </a>
-
-      <p className="text-xs text-muted-foreground/60 text-center">
-        Vagas limitadas • Acesso imediato
-      </p>
+      {showButton ? (
+        <>
+          <a
+            href={AFFILIATE_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full max-w-sm block animate-fade-in"
+          >
+            <button className="w-full py-4 rounded-2xl quiz-gradient text-primary-foreground font-extrabold text-lg tracking-wide glow-primary pulse-glow transition-transform active:scale-95">
+              🔓 QUERO MEU ACESSO
+            </button>
+          </a>
+          <p className="text-xs text-muted-foreground/60 text-center">
+            Vagas limitadas • Acesso imediato
+          </p>
+        </>
+      ) : (
+        <p className="text-xs text-muted-foreground/60 text-center animate-pulse">
+          Leia o depoimento acima...
+        </p>
+      )}
     </div>
   );
 };
