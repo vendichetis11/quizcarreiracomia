@@ -10,10 +10,10 @@ const VSL = () => {
     script.async = true;
     document.head.appendChild(script);
 
-    // Show arrow after video ends (approximately 5-6 seconds after page load based on video duration)
+    // Show arrow after video ends (11:19 minutes = 679 seconds)
     const timer = setTimeout(() => {
       setShowArrow(true);
-    }, 6000);
+    }, 679000);
 
     return () => {
       document.head.removeChild(script);
@@ -64,6 +64,21 @@ const VSL = () => {
             </div>
           </div>
         </div>
+
+        {/* Progress Bar while video is playing */}
+        {!showArrow && (
+          <div className="w-full space-y-2">
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div
+                className="bg-primary h-2 rounded-full transition-all duration-1000"
+                style={{
+                  width: `${(Math.min(Date.now() - (Date.now() - 679000), 679000) / 679000) * 100}%`,
+                }}
+              />
+            </div>
+            <p className="text-xs text-muted-foreground text-center">Vídeo em reprodução...</p>
+          </div>
+        )}
 
         {/* Arrow pointing to CTA */}
         {showArrow && (
