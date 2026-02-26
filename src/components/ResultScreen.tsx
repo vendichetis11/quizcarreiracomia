@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { CheckCircle, ShieldCheck, ChevronDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const AFFILIATE_LINK = "https://kiwify.app/U7sUyIQ?afid=bCH5tjUf";
+
 
 const ResultScreen = () => {
+  const navigate = useNavigate();
   const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
@@ -43,15 +45,12 @@ const ResultScreen = () => {
       {showButton ?
       <>
           <ChevronDown className="w-8 h-8 text-primary animate-bounce animate-fade-in" />
-          <a
-          href={AFFILIATE_LINK}
-          rel="noopener noreferrer"
-          className="w-full max-w-sm block animate-fade-in">
-
-            <button className="w-full py-4 rounded-2xl quiz-gradient text-primary-foreground font-extrabold text-lg tracking-wide glow-primary pulse-glow transition-transform active:scale-95">
-              🟢 LIBERAR MEU ACESSO AGORA
-            </button>
-          </a>
+          <button
+            onClick={() => navigate("/vsl")}
+            className="w-full max-w-sm py-4 rounded-2xl quiz-gradient text-primary-foreground font-extrabold text-lg tracking-wide glow-primary pulse-glow transition-transform active:scale-95 animate-fade-in"
+          >
+            🟢 LIBERAR MEU ACESSO AGORA
+          </button>
           <p className="text-xs text-destructive/80 text-center font-semibold animate-fade-in">
             ⚠️ Este vídeo sairá do ar assim que as vagas da mentoria forem preenchidas.
           </p>
