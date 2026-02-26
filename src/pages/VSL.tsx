@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 const VSL = () => {
   const [showArrow, setShowArrow] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [showCheckout, setShowCheckout] = useState(false);
 
   useEffect(() => {
     // Load the Converte AI smart player script
@@ -139,12 +140,24 @@ const VSL = () => {
         {showArrow && (
           <button
             onClick={() => {
-              window.location.href = "https://pay.kiwify.com.br/vjjTIiE?afid=bCH5tjUf";
+              setShowCheckout(true);
             }}
             className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 px-6 rounded-lg text-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
           >
             GARANTIR MINHA VAGA AGORA
           </button>
+        )}
+
+        {showCheckout && (
+          <div className="w-full h-screen mt-6">
+            <iframe
+              src="https://pay.kiwify.com.br/vjjTIiE?afid=bCH5tjUf"
+              title="Kiwify Checkout"
+              className="w-full h-full border-none rounded-lg"
+              allow="autoplay; fullscreen; payment"
+              sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+            />
+          </div>
         )}
       </div>
     </div>
