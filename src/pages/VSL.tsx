@@ -10,7 +10,6 @@ const VSL = () => {
     script.async = true;
     document.head.appendChild(script);
 
-    // Aguarda o player carregar
     const checkPlayer = setInterval(() => {
       if (window.smartplayer) {
         const player = window.smartplayer.instances?.[0];
@@ -18,25 +17,34 @@ const VSL = () => {
         if (player) {
           clearInterval(checkPlayer);
 
-          // Evento quando o vídeo termina
-          player.on("ended", () => {
+          // Evento correto do SmartPlayer
+          const liberarCTA = () => {
+            console.log("VIDEO FINALIZADO");
             setShowCTA(true);
-            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-          });
+            window.scrollTo({
+              top: document.body.scrollHeight,
+              behavior: "smooth",
+            });
+          };
+
+          player.on("finish", liberarCTA);
+          player.on("complete", liberarCTA);
         }
       }
     }, 500);
 
     return () => {
-      document.head.removeChild(script);
       clearInterval(checkPlayer);
+      if (document.head.contains(script)) {
+        document.head.removeChild(script);
+      }
     };
   }, []);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-start px-4 py-10 animate-fade-in">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-start px-4 py-10">
       <div className="w-full max-w-sm space-y-6 text-center">
-        <h1 className="text-2xl md:text-3xl font-extrabold text-foreground leading-tight">
+        <h1 className="text-2xl md:text-3xl font-extrabold leading-tight">
           <span className="text-primary">Diagnóstico Concluído:</span> Seu perfil foi{" "}
           <span className="text-primary">aprovado</span> para o{" "}
           <span className="text-primary">Plano 10K</span> em{" "}
@@ -78,9 +86,9 @@ const VSL = () => {
         </div>
 
         {!showCTA && (
-         <p className="text-xs text-muted-foreground">
-  Assista até o final para entender tudo...
-</p>
+          <p className="text-xs text-muted-foreground">
+            Assista até o final para entender tudo...
+          </p>
         )}
 
         {showCTA && (
