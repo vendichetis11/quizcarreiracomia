@@ -21,8 +21,8 @@ const ResultScreen = () => {
         <h2 className="text-2xl font-extrabold text-foreground">
           98% de Compatibilidade! ✅
         </h2>
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          Com base nas suas respostas, você tem o <span className="text-primary font-semibold">perfil ideal</span> para
+        <p className="text-sm text-muted-foreground leading-relaxed">Com base nas suas respostas, você tem o perfil ideal para aplicar o método que gerou mais de 6 dígitos no Tiktok Shop sem contratar modelos reais.
+          <span className="text-primary font-semibold">perfil ideal</span> para
           aplicar o método que gerou R$ 100 mil sem contratar modelos reais.
         </p>
       </div>
@@ -43,14 +43,14 @@ const ResultScreen = () => {
         Assista ao vídeo para liberar seu acesso ao <span className="text-primary font-semibold">método completo</span>.
       </p>
 
-      {showButton ? (
-        <>
+      {showButton ?
+      <>
           <a
-            href={AFFILIATE_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full max-w-sm block animate-fade-in"
-          >
+          href={AFFILIATE_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full max-w-sm block animate-fade-in">
+
             <button className="w-full py-4 rounded-2xl quiz-gradient text-primary-foreground font-extrabold text-lg tracking-wide glow-primary pulse-glow transition-transform active:scale-95">
               🟢 LIBERAR MEU ACESSO AGORA
             </button>
@@ -58,14 +58,14 @@ const ResultScreen = () => {
           <p className="text-xs text-destructive/80 text-center font-semibold animate-fade-in">
             ⚠️ Este vídeo sairá do ar assim que as vagas da mentoria forem preenchidas.
           </p>
-        </>
-      ) : (
-        <p className="text-xs text-muted-foreground/60 text-center animate-pulse">
+        </> :
+
+      <p className="text-xs text-muted-foreground/60 text-center animate-pulse">
           Leia o depoimento acima...
         </p>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 };
 
 export default ResultScreen;
