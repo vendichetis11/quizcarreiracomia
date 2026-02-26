@@ -98,7 +98,15 @@ const VSL = () => {
 
         {/* Progress Bar while video is playing */}
         {!showArrow && (
-          <p className="text-xs text-muted-foreground text-center">Vídeo em reprodução...</p>
+          <div className="flex flex-col items-center gap-3">
+            <p className="text-xs text-muted-foreground text-center">Vídeo em reprodução...</p>
+            <button
+              onClick={() => setShowArrow(true)}
+              className="text-xs text-primary hover:text-primary/80 underline"
+            >
+              Já assisti, mostrar CTA →
+            </button>
+          </div>
         )}
 
         {/* Arrow pointing to CTA */}
