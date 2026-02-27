@@ -1,28 +1,31 @@
-// VideoPlayer.tsx
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
-const VideoPlayer = () => {
+const VideoComponent = () => {
+    const videoRef = useRef(null);
+    const [showButton, setShowButton] = useState(false);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        const checkTime = setInterval(() => {
+            if (video.currentTime >= 30 && !showButton) {
+                setShowButton(true);
+                clearInterval(checkTime);
+            }
+        }, 1000);
+
+        return () => clearInterval(checkTime);
+    }, [showButton]);
+
     return (
-        <div style={{
-            position: 'relative',
-            paddingBottom: '125%', // Changed from 56.25% to 125% for a vertical format
-            height: 0,
-            overflow: 'hidden',
-        }}>
-            <iframe
-                src="your-video-url-here"
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    border: '0',
-                }}
-                allowFullScreen
-            ></iframe>
+        <div>
+            <video ref={videoRef} src="path_to_your_video.mp4" controls />
+            {showButton && \
+                <button className="cta-button animate">Call to Action</button>
+            }
         </div>
     );
 };
 
-export default VideoPlayer;
+export default VideoComponent;
