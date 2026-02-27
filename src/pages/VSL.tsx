@@ -27,8 +27,8 @@ const VSL = () => {
       });
     };
 
-    // TEMP: timer reduzido para teste
-    const fallbackTimer = window.setTimeout(liberarCTA, 10000);
+    // Fallback timer: 11min19s
+    const fallbackTimer = window.setTimeout(liberarCTA, 679000);
 
     const handleMessage = (event: MessageEvent) => {
       const data = event.data as string | { type?: string };
