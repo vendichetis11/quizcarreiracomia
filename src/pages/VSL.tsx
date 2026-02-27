@@ -16,45 +16,49 @@ const VSL = () => {
     script.async = true;
     document.head.appendChild(script);
 
-    const checkPlayer = setInterval(() => {
-      if (window.smartplayer) {
-        const player = window.smartplayer.instances?.[0];
+    const liberarCTA = () => {
+      setShowCTA((prev) => {
+        if (prev) return prev;
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+        return true;
+      });
+    };
 
-        if (player) {
-          clearInterval(checkPlayer);
+    // TEMP: timer reduzido para teste
+    const fallbackTimer = window.setTimeout(liberarCTA, 10000);
 
-          // Evento correto do SmartPlayer
-          const liberarCTA = () => {
-            console.log("VIDEO FINALIZADO");
-            setShowCTA(true);
-            window.scrollTo({
-              top: document.body.scrollHeight,
-              behavior: "smooth",
-            });
-          };
+    const handleMessage = (event: MessageEvent) => {
+      const data = event.data as string | { type?: string };
+      if (
+        data === "ended" ||
+        (typeof data === "object" &&
+          (data.type === "ended" || data.type === "finish" || data.type === "complete"))
+      ) {
+        liberarCTA();
+      }
+    };
+    window.addEventListener("message", handleMessage);
 
-          player.on("finish", liberarCTA);
-          player.on("complete", liberarCTA);
-          player.on("ended", liberarCTA);
+    const checkPlayer = window.setInterval(() => {
+      const player = window.smartplayer?.instances?.[0];
+      if (!player) return;
 
-          // Fallback: escuta mensagens do iframe do SmartPlayer
-          const handleMessage = (event: MessageEvent) => {
-            if (event.data && (event.data.type === "ended" || event.data.type === "finish" || event.data.type === "complete" || event.data === "ended")) {
-              liberarCTA();
-            }
-          };
-          window.addEventListener("message", handleMessage);
+      clearInterval(checkPlayer);
 
-          // TEMP: timer reduzido para teste (voltar para 679000)
-          setTimeout(() => {
-            liberarCTA();
-          }, 10000);
-        }
+      if (typeof player.on === "function") {
+        player.on("finish", liberarCTA);
+        player.on("complete", liberarCTA);
+        player.on("ended", liberarCTA);
       }
     }, 500);
 
     return () => {
       clearInterval(checkPlayer);
+      clearTimeout(fallbackTimer);
+      window.removeEventListener("message", handleMessage);
       if (document.head.contains(script)) {
         document.head.removeChild(script);
       }
