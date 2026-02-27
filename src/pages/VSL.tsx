@@ -45,10 +45,10 @@ const VSL = () => {
           };
           window.addEventListener("message", handleMessage);
 
-          // Fallback timer: 11min19s = 679 segundos
+          // TEMP: timer reduzido para teste (voltar para 679000)
           setTimeout(() => {
             liberarCTA();
-          }, 679000);
+          }, 10000);
         }
       }
     }, 500);
